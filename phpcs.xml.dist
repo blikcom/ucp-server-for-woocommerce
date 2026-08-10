@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="ucp-server-for-woocommerce" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/master/phpcs.xsd">
+	<description>WordPress Coding Standards for UCP Server for WooCommerce.</description>
+
+	<file>ucp-server-for-woocommerce.php</file>
+	<file>uninstall.php</file>
+	<file>src</file>
+	<file>tests</file>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+
+	<arg value="sp"/>
+	<arg name="extensions" value="php"/>
+	<arg name="parallel" value="8"/>
+	<arg name="cache" value=".phpcs.cache"/>
+
+	<config name="minimum_wp_version" value="6.6"/>
+	<config name="testVersion" value="7.4-"/>
+
+	<rule ref="WordPress">
+		<!-- PSR-4 class files (ClassName.php) instead of class-*.php. -->
+		<exclude name="WordPress.Files.FileName"/>
+		<!-- Short array syntax is used across the codebase. -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+		<!-- PSR-4 OO code: allow standard PHP file layout without file-level doc requirements on class files. -->
+		<exclude name="Squiz.Commenting.FileComment"/>
+		<!-- One-line @var/@return docblocks on accessors are intentional style. -->
+		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+		<!-- We use native PHP exceptions with escaped output at render time. -->
+		<exclude name="WordPress.Security.EscapeOutput.ExceptionNotEscaped"/>
+	</rule>
+
+	<rule ref="PHPCompatibilityWP"/>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="ucpws"/>
+				<element value="UCPWS"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="ucp-server-for-woocommerce"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Direct DB access is required for the plugin's custom tables. -->
+	<rule ref="WordPress.DB.DirectDatabaseQuery.DirectQuery">
+		<exclude-pattern>src/Storage/*</exclude-pattern>
+		<exclude-pattern>src/Bootstrap/*</exclude-pattern>
+		<exclude-pattern>uninstall.php</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.DB.DirectDatabaseQuery.NoCaching">
+		<exclude-pattern>src/Storage/*</exclude-pattern>
+		<exclude-pattern>src/Bootstrap/*</exclude-pattern>
+		<exclude-pattern>uninstall.php</exclude-pattern>
+	</rule>
+
+	<!-- Tests: relax docblock + naming rules; the unit bootstrap intentionally
+	     shims WordPress core function names. -->
+	<rule ref="Squiz.Commenting">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="Generic.Commenting">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.NamingConventions.ValidVariableName">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.WP.GlobalVariablesOverride">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.DB.DirectDatabaseQuery">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+</ruleset>

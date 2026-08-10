@@ -1,0 +1,28 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build artifacts
+/dist/
+/build/
+*.zip
+
+# Tooling caches / reports
+/.phpcs.cache
+/.phpunit.result.cache
+/.phpunit.cache/
+/phpstan.cache/
+/coverage/
+
+# Local env
+/.env
+/.env.*
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editors
+/.idea/
+/.vscode/
+*.swp

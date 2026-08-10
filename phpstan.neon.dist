@@ -1,0 +1,20 @@
+includes:
+  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+  level: 6
+  phpVersion: 70400
+  paths:
+    - src
+    - ucp-server-for-woocommerce.php
+    - uninstall.php
+  scanFiles:
+    - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+    - vendor/php-stubs/woocommerce-stubs/woocommerce-packages-stubs.php
+  bootstrapFiles:
+    - phpstan-bootstrap.php
+  treatPhpDocTypesAsCertain: false
+  reportUnmatchedIgnoredErrors: false
+  ignoreErrors:
+    # Action Scheduler functions ship with WooCommerce at runtime.
+    - '#Function as_(schedule_single_action|unschedule_action|next_scheduled_action|has_scheduled_action)( |\()#'

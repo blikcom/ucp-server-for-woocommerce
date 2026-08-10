@@ -1,0 +1,15 @@
+LICENSE PLACEHOLDER — PENDING LEGAL REVIEW
+
+The license for this repository has not been finalized yet. Until a license is
+granted, all rights are reserved by the copyright holders and no permission is
+granted to use, copy, modify, or distribute this software.
+
+Notes for the eventual decision:
+
+- Distribution through the wordpress.org plugin directory requires a
+  GPL-compatible license (GPLv2 or later recommended for WordPress plugins).
+- Bundled third-party material keeps its own license regardless of this file:
+  - resources/schemas/2026-04-08/** — official UCP JSON Schemas,
+    Apache License 2.0, Copyright 2026 UCP Authors
+    (see resources/schemas/2026-04-08/LICENSE.ucp-schemas).
+  - Composer dependencies under vendor/ carry their respective licenses.
