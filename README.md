@@ -258,5 +258,6 @@ are used to validate responses and the discovery profile; one relative `$ref` in
 
 ## License
 
-License pending legal review — see [LICENSE](LICENSE). Distribution via wordpress.org would
-require a GPL-compatible license.
+[GPL-3.0-or-later](LICENSE) — matching WooCommerce (GPLv3) and eligible for
+distribution via wordpress.org. Bundled UCP JSON Schemas remain Apache-2.0
+(© UCP Authors), which is GPL-compatible.

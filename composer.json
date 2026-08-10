@@ -2,7 +2,7 @@
     "name": "ucpws/ucp-server-for-woocommerce",
     "description": "UCP Server for WooCommerce - turns a WooCommerce shop into a Universal Commerce Protocol (UCP) business server.",
     "type": "wordpress-plugin",
-    "license": "proprietary",
+    "license": "GPL-3.0-or-later",
     "keywords": [
         "wordpress",
         "woocommerce",
