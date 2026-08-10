@@ -57,7 +57,7 @@ class MockHandler implements PaymentHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	public function get_spec_url(): ?string {
-		return 'https://github.com/example/ucp-server-for-woocommerce/blob/main/docs/payment-handlers.md#mock-handler';
+		return 'https://github.com/blikcom/ucp-server-for-woocommerce/blob/main/docs/payment-handlers.md#mock-handler';
 	}
 
 	/**

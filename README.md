@@ -72,7 +72,7 @@ engine — this plugin never reimplements totals math. Amounts on the wire are i
 From a release build, install like any plugin. From source:
 
 ```bash
-git clone https://github.com/example/ucp-server-for-woocommerce wp-content/plugins/ucp-server-for-woocommerce
+git clone https://github.com/blikcom/ucp-server-for-woocommerce wp-content/plugins/ucp-server-for-woocommerce
 cd wp-content/plugins/ucp-server-for-woocommerce
 make install          # composer install, in Docker
 ```

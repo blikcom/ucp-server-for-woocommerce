@@ -10,7 +10,7 @@
         "agentic-commerce"
     ],
     "support": {
-        "issues": "https://github.com/example/ucp-server-for-woocommerce/issues"
+        "issues": "https://github.com/blikcom/ucp-server-for-woocommerce/issues"
     },
     "require": {
         "php": ">=7.4",
