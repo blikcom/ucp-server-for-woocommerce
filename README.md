@@ -256,6 +256,8 @@ Bundled official UCP JSON Schemas (`resources/schemas/2026-04-08`, Apache-2.0, Â
 are used to validate responses and the discovery profile; one relative `$ref` in
 `discovery/profile_schema.json` is normalized so the bundle resolves offline.
 
+Architecture decision records: **[docs/adr/](docs/adr/)**.
+
 ## License
 
 [GPL-3.0-or-later](LICENSE) â€” matching WooCommerce (GPLv3) and eligible for
