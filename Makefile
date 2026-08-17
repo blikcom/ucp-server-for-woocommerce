@@ -10,10 +10,14 @@ PHP_IMAGE      ?= php:8.3-cli
 DOCKER_RUN     := docker run --rm -v "$(CURDIR)":/app -w /app
 COMPOSER_CACHE := $(HOME)/.cache/ucpws-composer
 
-.PHONY: help install update dump-autoload phpcs phpcbf phpstan test-unit test-unit-modern lint check
+.PHONY: help hooks install update dump-autoload phpcs phpcbf phpstan test-unit test-unit-modern lint check
 
 help: ## List available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2}'
+
+hooks: ## Enable versioned git hooks (conventional commits)
+	git config core.hooksPath .githooks
+	@echo "Hooks enabled (core.hooksPath = .githooks)."
 
 install: ## composer install (in Docker)
 	@mkdir -p $(COMPOSER_CACHE)
