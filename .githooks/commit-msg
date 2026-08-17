@@ -1,0 +1,6 @@
+#!/bin/sh
+# Conventional-commit subject on every commit. Enable: make hooks
+set -eu
+ROOT=$(git rev-parse --show-toplevel)
+MSG=$(head -n1 "$1")
+sh "$ROOT/scripts/check-conventions.sh" --message "$MSG"
