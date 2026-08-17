@@ -248,9 +248,11 @@ from all responses and persists instruments without it.
 
 The repo ships a Docker-based toolchain (`make help`) and CI (GitHub Actions) running PHPCS
 (WordPress Coding Standards), PHPStan (level 6 with WP/WC stubs) and the unit suite on PHP
-7.4 + 8.3. Integration and conformance verification run against your own WordPress +
-WooCommerce environment (see Quickstart above); the plugin is HPOS-compatible and declares it
-via `FeaturesUtil`.
+7.4 + 8.3. Pull requests must use conventional-commit branch names and titles
+(`feat/…`, `fix: …`); see [CONTRIBUTING.md](CONTRIBUTING.md). Integration and
+conformance verification run against your own WordPress + WooCommerce environment
+(see Quickstart above); the plugin is HPOS-compatible and declares it via
+`FeaturesUtil`.
 
 Bundled official UCP JSON Schemas (`resources/schemas/2026-04-08`, Apache-2.0, © UCP Authors)
 are used to validate responses and the discovery profile; one relative `$ref` in
