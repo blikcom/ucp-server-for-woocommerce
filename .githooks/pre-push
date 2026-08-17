@@ -1,0 +1,7 @@
+#!/bin/sh
+# Conventional-commit branch names. Enable: make hooks
+set -eu
+ROOT=$(git rev-parse --show-toplevel)
+BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || true)
+[ -n "$BRANCH" ] || exit 0
+sh "$ROOT/scripts/check-conventions.sh" --branch "$BRANCH"

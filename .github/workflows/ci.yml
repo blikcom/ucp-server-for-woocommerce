@@ -10,6 +10,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  conventions:
+    name: Conventional commits
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check branch name and PR title
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          sh scripts/check-conventions.sh --branch "$HEAD_REF"
+          sh scripts/check-conventions.sh --title "$PR_TITLE"
+
   lint:
     name: PHPCS + PHPStan
     runs-on: ubuntu-latest
