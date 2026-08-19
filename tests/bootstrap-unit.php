@@ -14,6 +14,7 @@ define( 'DAY_IN_SECONDS', 86400 );
 define( 'HOUR_IN_SECONDS', 3600 );
 
 require dirname( __DIR__ ) . '/vendor/autoload.php';
+require __DIR__ . '/stubs/class-wp-user.php';
 
 /**
  * In-memory options store for tests.
@@ -21,6 +22,24 @@ require dirname( __DIR__ ) . '/vendor/autoload.php';
  * @var array<string, mixed>
  */
 $GLOBALS['ucpws_test_options'] = array();
+
+/**
+ * In-memory users, keyed by e-mail, for the customer-link tests.
+ *
+ * @var array<string, int>
+ */
+$GLOBALS['ucpws_test_users'] = array();
+
+if ( ! function_exists( 'get_user_by' ) ) {
+	function get_user_by( $field, $value ) {
+		if ( 'email' !== $field || ! isset( $GLOBALS['ucpws_test_users'][ $value ] ) ) {
+			return false;
+		}
+		$user     = new WP_User();
+		$user->ID = $GLOBALS['ucpws_test_users'][ $value ];
+		return $user;
+	}
+}
 
 if ( ! function_exists( 'apply_filters' ) ) {
 	function apply_filters( $hook, $value ) {
