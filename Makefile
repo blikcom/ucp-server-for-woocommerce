@@ -10,7 +10,7 @@ PHP_IMAGE      ?= php:8.3-cli
 DOCKER_RUN     := docker run --rm -v "$(CURDIR)":/app -w /app
 COMPOSER_CACHE := $(HOME)/.cache/ucpws-composer
 
-.PHONY: help hooks install update dump-autoload phpcs phpcbf phpstan test-unit test-unit-modern lint check
+.PHONY: help hooks install update dump-autoload phpcs phpcbf phpstan test-unit test-unit-modern lint check conformance
 
 help: ## List available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2}'
@@ -46,5 +46,8 @@ test-unit-modern: ## Unit tests on modern PHP
 	$(DOCKER_RUN) $(PHP_IMAGE) vendor/bin/phpunit -c phpunit-unit.xml.dist
 
 lint: phpcs phpstan ## phpcs + phpstan
+
+conformance: ## Throwaway shop + scripted UCP checkout (pre-release gate)
+	bash harness/run.sh
 
 check: lint test-unit ## Everything: coding standards, static analysis, unit tests

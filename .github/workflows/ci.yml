@@ -64,3 +64,16 @@ jobs:
 
       - name: PHPUnit (unit)
         run: vendor/bin/phpunit -c phpunit-unit.xml.dist
+
+  conformance:
+    name: Conformance harness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The harness brings its own pinned WordPress, WooCommerce and MariaDB,
+      # so nothing here needs PHP or composer. It runs the scripted checkout;
+      # the official UCP suite lives in another repository and is a release
+      # gate rather than a per-push one (docs/conformance.md).
+      - name: Throwaway shop + scripted UCP checkout
+        run: make conformance

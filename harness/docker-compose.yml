@@ -1,0 +1,77 @@
+# A throwaway WordPress + WooCommerce for the conformance harness.
+#
+# Nothing here is shared with any other stack: its own project name, its own
+# volumes, its own port. `make conformance` creates it and destroys it, so a
+# run always starts from the same state (AC-02).
+name: ucpws-conformance
+
+services:
+  db:
+    image: mariadb:11.8.8
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
+      MARIADB_ROOT_PASSWORD: rootpass
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  wordpress:
+    image: wordpress:6.9-php8.3-apache
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      # Deliberately not a port any dev stack uses.
+      - "127.0.0.1:${CONFORMANCE_PORT:-8099}:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      # The suite's posture, for this throwaway instance only.
+      UCPWS_AUTH_MODE: open
+      UCPWS_NEGOTIATION_MODE: lenient
+      UCPWS_ENABLE_MOCK_HANDLER: "1"
+      UCPWS_SIMULATION_SECRET: ${UCPWS_SIMULATION_SECRET:-conformance-secret}
+      UCPWS_ALLOW_INSECURE_PROFILES: "1"
+      UCPWS_ALLOW_PRIVATE_HOSTS: "1"
+    volumes:
+      # wp-cli operates on the same install, so the core files are shared.
+      - wp:/var/www/html
+      # The plugin under test is the working tree, not a release.
+      - ..:/var/www/html/wp-content/plugins/ucp-server-for-woocommerce:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost/wp-admin/install.php"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  cli:
+    image: wordpress:cli-php8.3
+    user: "33:33"
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      UCPWS_AUTH_MODE: open
+      UCPWS_NEGOTIATION_MODE: lenient
+      UCPWS_ENABLE_MOCK_HANDLER: "1"
+      UCPWS_SIMULATION_SECRET: ${UCPWS_SIMULATION_SECRET:-conformance-secret}
+      UCPWS_ALLOW_INSECURE_PROFILES: "1"
+      UCPWS_ALLOW_PRIVATE_HOSTS: "1"
+    volumes:
+      - wp:/var/www/html
+      - ..:/var/www/html/wp-content/plugins/ucp-server-for-woocommerce:ro
+    entrypoint: ["sleep", "infinity"]
+
+volumes:
+  # Named so `docker compose down -v` takes it with the stack.
+  wp:
