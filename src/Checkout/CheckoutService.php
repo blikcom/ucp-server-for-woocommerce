@@ -518,7 +518,9 @@ class CheckoutService {
 		$state['buyer'] = $buyer;
 
 		if ( isset( $buyer['email'] ) && is_string( $buyer['email'] ) && is_email( $buyer['email'] ) ) {
-			$order->set_billing_email( sanitize_email( $buyer['email'] ) );
+			$email = sanitize_email( $buyer['email'] );
+			$order->set_billing_email( $email );
+			$this->link_customer( $order, $email );
 		}
 		if ( isset( $buyer['first_name'] ) && is_string( $buyer['first_name'] ) ) {
 			$order->set_billing_first_name( sanitize_text_field( $buyer['first_name'] ) );
@@ -613,6 +615,26 @@ class CheckoutService {
 			$stripped[] = $instrument;
 		}
 		return $stripped;
+	}
+
+	/**
+	 * Link the order to an existing customer account, when the buyer's
+	 * e-mail belongs to one (see CustomerLink for what this link does and
+	 * does not mean). An unknown e-mail leaves a guest order, as before.
+	 *
+	 * @param \WC_Order $order Draft order.
+	 * @param string    $email Sanitized buyer e-mail.
+	 * @return void
+	 */
+	private function link_customer( \WC_Order $order, string $email ): void {
+		$user_id = CustomerLink::resolve( $email );
+
+		if ( ! CustomerLink::should_link( (int) $order->get_customer_id(), $user_id ) ) {
+			return;
+		}
+
+		$order->set_customer_id( $user_id );
+		$order->update_meta_data( CustomerLink::META_PLATFORM_ORIGIN, 'ucp' );
 	}
 
 	/**
