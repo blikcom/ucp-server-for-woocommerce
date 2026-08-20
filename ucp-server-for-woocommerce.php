@@ -3,7 +3,7 @@
  * Plugin Name:          UCP Server for WooCommerce
  * Plugin URI:           https://github.com/blikcom/ucp-server-for-woocommerce
  * Description:          Turns a WooCommerce shop into a Universal Commerce Protocol (UCP) business server: discovery profile, checkout, catalog and order capabilities over REST and MCP, signed lifecycle webhooks, and a pluggable payment handler architecture.
- * Version:              0.1.0
+ * Version:              0.1.1
  * Requires at least:    6.6
  * Requires PHP:         7.4
  * Requires Plugins:     woocommerce
@@ -25,7 +25,7 @@ if ( defined( 'UCPWS_VERSION' ) ) {
 	return;
 }
 
-define( 'UCPWS_VERSION', '0.1.0' );
+define( 'UCPWS_VERSION', '0.1.1' );
 define( 'UCPWS_UCP_VERSION', '2026-04-08' );
 define( 'UCPWS_PLUGIN_FILE', __FILE__ );
 define( 'UCPWS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
