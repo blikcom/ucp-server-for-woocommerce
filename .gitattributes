@@ -1,8 +1,9 @@
 # Exclude dev-only files from release archives (composer/git archive).
 /.github            export-ignore
+/.githooks          export-ignore
 /tests              export-ignore
-/bin                export-ignore
-/conformance        export-ignore
+/harness            export-ignore
+/scripts            export-ignore
 /docs               export-ignore
 /.wp-env.json       export-ignore
 /.editorconfig      export-ignore
