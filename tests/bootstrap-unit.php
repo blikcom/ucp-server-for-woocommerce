@@ -15,6 +15,8 @@ define( 'HOUR_IN_SECONDS', 3600 );
 
 require dirname( __DIR__ ) . '/vendor/autoload.php';
 require __DIR__ . '/stubs/class-wp-user.php';
+require __DIR__ . '/stubs/class-unnamed-handler.php';
+require __DIR__ . '/stubs/class-named-handler.php';
 
 /**
  * In-memory options store for tests.

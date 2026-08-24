@@ -30,13 +30,20 @@ defined( 'ABSPATH' ) || exit;
  * Card credentials (`type: card`) and unknown credential shapes with a type are
  * approved, mirroring the UCP reference merchant server.
  */
-class MockHandler implements PaymentHandlerInterface {
+class MockHandler implements PaymentHandlerInterface, PaymentHandlerTitle {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function get_name(): string {
 		return 'dev.ucpws.mock';
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_title(): string {
+		return __( 'Test payment', 'ucp-server-for-woocommerce' );
 	}
 
 	/**
