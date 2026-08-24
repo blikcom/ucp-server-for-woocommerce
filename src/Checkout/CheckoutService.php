@@ -10,6 +10,7 @@ namespace UCPWS\Checkout;
 use UCPWS\Negotiation\NegotiationContext;
 use UCPWS\Orders\OrderService;
 use UCPWS\Payments\HandlerRegistry;
+use UCPWS\Payments\PaymentTitle;
 use UCPWS\Protocol\ErrorCodes;
 use UCPWS\Protocol\UcpException;
 use UCPWS\Storage\Sessions;
@@ -313,7 +314,12 @@ class CheckoutService {
 
 		// Success: transition the draft into a real, paid order.
 		$order->set_payment_method( 'ucpws_' . sanitize_key( $handler->get_id() ) );
-		$order->set_payment_method_title( $handler->get_name() );
+		// get_name() is the reverse-domain REGISTRY KEY, not a label - putting
+		// it here printed `com.example.tokenizer` on the customer's order page
+		// and in their e-mail. Handlers that know what their payment is called
+		// implement PaymentHandlerTitle; the rest keep the previous behaviour,
+		// because there is nothing better to invent on their behalf.
+		$order->set_payment_method_title( PaymentTitle::of( $handler ) );
 		$order->update_meta_data( '_ucpws_checkout_id', $session_id );
 		if ( null !== $context->webhook_url ) {
 			$order->update_meta_data( '_ucpws_webhook_url', $context->webhook_url );
